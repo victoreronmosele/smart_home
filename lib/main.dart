@@ -14,8 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme:
-          ThemeData(primarySwatch: Colors.blue, backgroundColor: Colors.white),
+      theme: ThemeData(primarySwatch: Colors.blue),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -128,7 +127,18 @@ class _MyHomePageState extends State<MyHomePage> {
                     ...Device.values.map(
                       (device) => SizedBox(
                         width: (availableScreenWidth * 0.5) - screenPaddingSize,
-                        child: DeviceCard(device: device),
+                        child: DeviceCard(
+                          device: device,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    DeviceScreen(device: device),
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ],
@@ -142,10 +152,26 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
+class DeviceScreen extends StatelessWidget {
+  final Device device;
+  const DeviceScreen({Key? key, required this.device}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Text(device.name),
+      ),
+    );
+  }
+}
+
 /// A widget that displays a [Device].
 class DeviceCard extends StatefulWidget {
   final Device device;
-  const DeviceCard({Key? key, required this.device}) : super(key: key);
+  final void Function() onTap;
+  const DeviceCard({Key? key, required this.device, required this.onTap})
+      : super(key: key);
 
   @override
   State<DeviceCard> createState() => _DeviceCardState();
@@ -155,57 +181,61 @@ class _DeviceCardState extends State<DeviceCard> {
   bool isOn = true;
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Card(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: CupertinoSwitch(
-                    value: isOn,
-                    onChanged: (newOnState) {
-                      setState(() {
-                        isOn = newOnState;
-                      });
-                    },
-                    activeColor: Colors.black,
-                    trackColor: Colors.black26,
+    return GestureDetector(
+      onTap: widget.onTap,
+      child: Stack(
+        children: [
+          Card(
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: CupertinoSwitch(
+                      value: isOn,
+                      onChanged: (newOnState) {
+                        setState(() {
+                          isOn = newOnState;
+                        });
+                      },
+                      activeColor: Colors.black,
+                      trackColor: Colors.black26,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                Text(
-                  widget.device.name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.w500,
+                  const SizedBox(
+                    height: 40,
                   ),
-                ),
-              ],
+                  Text(
+                    widget.device.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
             ),
           ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
+          Align(
+            alignment: const Alignment(-1.5, 0.0),
+            child: Image.asset(
+              widget.device.imageUrl,
+              height: 100,
+              width: 100,
+              fit: BoxFit.fitWidth,
+            ),
           ),
-        ),
-        Align(
-          alignment: const Alignment(-1.2, 0.0),
-          child: Image.asset(
-            widget.device.imageUrl,
-            height: 80,
-            width: 80,
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
