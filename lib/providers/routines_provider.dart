@@ -26,4 +26,14 @@ final routinesProvider = StateProvider((_) => [
           unit: 'db',
           normalLevel: NormalLevel(minimum: 0, maximum: 25),
           deviceId: 1),
+      Routine(
+          name: 'TV Channel',
+          status: RoutineStatus.moderate,
+          value: 30,
+          unit: 'Ch ',
+          normalLevel: NormalLevel(minimum: 1, maximum: 99),
+          deviceId: 1,
+          showDecimal: false, 
+          showUnitFirst: true
+          ),
     ]);

@@ -3,42 +3,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:smart_home/enums/device.dart';
 import 'package:smart_home/models/routine.dart';
+import 'package:smart_home/utils/display_strings_util.dart';
 
 /// A widget that displays a [Routine].
 class RoutineWidget extends StatelessWidget {
   final Routine routine;
 
   const RoutineWidget({Key? key, required this.routine}) : super(key: key);
-
-  String getNormalLevelInformation() {
-    final maximum = routine.normalLevel.maximum;
-    final minimum = routine.normalLevel.minimum;
-    final unit = routine.unit;
-
-    if (maximum == null && minimum == null) {
-      return '';
-    }
-
-    String stringRepresentation = 'Normal';
-
-    if (routine.normalLevel.maximum == routine.normalLevel.minimum) {
-      stringRepresentation += ': $minimum$unit';
-      return stringRepresentation;
-    }
-
-    if (routine.normalLevel.maximum == null) {
-      stringRepresentation += ' above $minimum$unit';
-      return stringRepresentation;
-    }
-
-    if (routine.normalLevel.minimum == null) {
-      stringRepresentation += ' below $maximum$unit';
-      return stringRepresentation;
-    }
-
-    stringRepresentation += ':  $minimum$unit - $maximum$unit';
-    return stringRepresentation;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +50,12 @@ class RoutineWidget extends StatelessWidget {
                     fontWeight: FontWeight.w200, fontSize: 12.0),
               ),
               Text(
-                '${routine.value}${routine.unit}',
+                DisplayStringsUtil.getFullUnitAndValue(
+                  value: routine.value,
+                  unit: routine.unit,
+                  showUnitFirst: routine.showUnitFirst,
+                  showDecimal: routine.showDecimal,
+                ),
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 28.0,
@@ -97,7 +73,13 @@ class RoutineWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  getNormalLevelInformation(),
+                  DisplayStringsUtil.getNormalLevelInformation(
+                    minimum: routine.normalLevel.minimum,
+                    maximum: routine.normalLevel.maximum,
+                    unit: routine.unit,
+                    showUnitFirst: routine.showUnitFirst,
+                    showDecimal: routine.showDecimal,
+                  ),
                   style: const TextStyle(
                       fontWeight: FontWeight.w200, fontSize: 12.0),
                 ),

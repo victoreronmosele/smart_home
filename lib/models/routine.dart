@@ -10,11 +10,23 @@ class Routine {
   final NormalLevel normalLevel;
   final int deviceId;
 
+  /// Defaults to `true`
+  /// 
+  /// If true, the unit is best displayed showing its decimals
+  final bool showDecimal;
+
+  /// Defaults to `false`
+  /// 
+  /// If true, the unit is best displayed showing the unit first
+  final bool showUnitFirst;
+
   Routine(
       {required this.name,
       required this.status,
       required this.value,
       required this.unit,
       required this.normalLevel,
-      required this.deviceId});
+      required this.deviceId,
+      this.showDecimal = true,
+      this.showUnitFirst = false});
 }
