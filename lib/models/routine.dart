@@ -11,12 +11,12 @@ class Routine {
   final int deviceId;
 
   /// Defaults to `true`
-  /// 
+  ///
   /// If true, the unit is best displayed showing its decimals
   final bool showDecimal;
 
   /// Defaults to `false`
-  /// 
+  ///
   /// If true, the unit is best displayed showing the unit first
   final bool showUnitFirst;
 

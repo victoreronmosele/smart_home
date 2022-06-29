@@ -33,7 +33,6 @@ final routinesProvider = StateProvider((_) => [
           unit: 'Ch ',
           normalLevel: NormalLevel(minimum: 1, maximum: 99),
           deviceId: 1,
-          showDecimal: false, 
-          showUnitFirst: true
-          ),
+          showDecimal: false,
+          showUnitFirst: true),
     ]);

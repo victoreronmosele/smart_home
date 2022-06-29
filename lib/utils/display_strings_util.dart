@@ -75,8 +75,7 @@ class DisplayStringsUtil {
       return stringRepresentation;
     }
 
-    stringRepresentation +=
-        ': $minimumValueToDisplay - $maximumValueToDisplay';
+    stringRepresentation += ': $minimumValueToDisplay - $maximumValueToDisplay';
     return stringRepresentation;
   }
 }
