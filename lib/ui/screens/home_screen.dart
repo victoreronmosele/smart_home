@@ -1,39 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smart_home/enums/device.dart';
-import 'package:smart_home/enums/routine_status.dart';
-import 'package:smart_home/models/normal_level.dart';
 import 'package:smart_home/models/routine.dart';
+import 'package:smart_home/providers/routines_provider.dart';
 import 'package:smart_home/ui/screens/device_screen.dart';
 import 'package:smart_home/ui/widgets/device_card.dart';
 import 'package:smart_home/ui/widgets/routine_widget.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  final routineList = [
-    Routine(
-        name: 'Temperature',
-        status: RoutineStatus.allright,
-        value: 21.0,
-        unit: ' °C',
-        normalLevel: NormalLevel(minimum: 18, maximum: 25),
-        deviceId: 3),
-    Routine(
-        name: 'Humidity',
-        status: RoutineStatus.moderate,
-        value: 24.0,
-        unit: '%',
-        normalLevel: NormalLevel(minimum: 30, maximum: 60),
-        deviceId: 2),
-  ];
-
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -42,6 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
     const double screenPaddingSize = 16.0;
 
     final double availableScreenWidth = screenWidth - screenPaddingSize;
+
+    final List<Routine> routineList = ref.watch(routinesProvider);
 
     return Scaffold(
       body: SafeArea(
@@ -137,16 +122,17 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      bottomNavigationBar:  BottomAppBar(
+      bottomNavigationBar: BottomAppBar(
         child: Container(
           height: 20,
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {}, label: const Text('Add Routine'), 
-          icon: const Icon(Icons.add),
-          ),
+        onPressed: () {},
+        label: const Text('Add Routine'),
+        icon: const Icon(Icons.add),
+      ),
     );
   }
 }
