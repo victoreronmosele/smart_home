@@ -4,6 +4,7 @@ import 'package:smart_home/enums/device.dart';
 import 'package:smart_home/models/routine.dart';
 import 'package:smart_home/providers/routines_provider.dart';
 import 'package:smart_home/ui/screens/device_screen.dart';
+import 'package:smart_home/ui/screens/routine_screen.dart';
 import 'package:smart_home/ui/widgets/device_card.dart';
 import 'package:smart_home/ui/widgets/routine_widget.dart';
 
@@ -67,8 +68,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           children: [
                             const SizedBox(height: 12.0),
                             RoutineWidget(
-                              routine: routine,
-                            ),
+                                routine: routine,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          RoutineScreen(routine: routine),
+                                    ),
+                                  );
+                                }),
                             const SizedBox(height: 12.0),
                           ],
                         )),

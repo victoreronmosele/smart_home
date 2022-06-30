@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smart_home/enums/device.dart';
 import 'package:smart_home/models/routine.dart';
 import 'package:smart_home/providers/routines_provider.dart';
+import 'package:smart_home/ui/screens/routine_screen.dart';
 import 'package:smart_home/ui/widgets/routine_widget.dart';
 
 class DeviceScreen extends ConsumerStatefulWidget {
@@ -82,6 +83,15 @@ class _DeviceScreenState extends ConsumerState<DeviceScreen> {
                             const SizedBox(height: 12.0),
                             RoutineWidget(
                               routine: routine,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        RoutineScreen(routine: routine),
+                                  ),
+                                );
+                              },
                             ),
                             const SizedBox(height: 12.0),
                           ],

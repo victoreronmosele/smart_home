@@ -19,6 +19,7 @@ class Routine {
   ///
   /// If true, the unit is best displayed showing the unit first
   final bool showUnitFirst;
+  final bool isSystemRoutine;
 
   Routine(
       {required this.name,
@@ -28,5 +29,6 @@ class Routine {
       required this.normalLevel,
       required this.deviceId,
       this.showDecimal = true,
-      this.showUnitFirst = false});
+      this.showUnitFirst = false,
+      this.isSystemRoutine = false});
 }
