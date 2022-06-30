@@ -36,6 +36,10 @@ class _DeviceScreenState extends ConsumerState<DeviceScreen> {
           ),
           onPressed: () => Navigator.pop(context),
         ),
+        title: Text(
+          widget.device.name,
+          style: const TextStyle(color: Colors.black),
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -44,31 +48,34 @@ class _DeviceScreenState extends ConsumerState<DeviceScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  widget.device.name,
-                  style: const TextStyle(
-                    fontSize: 36.0,
-                  ),
-                ),
-                const SizedBox(
-                  height: 16.0,
-                ),
-                CupertinoSwitch(
-                  value: isOn,
-                  onChanged: (newOnState) {
-                    setState(() {
-                      isOn = newOnState;
-                    });
-                  },
-                  activeColor: Colors.black,
-                  trackColor: Colors.black26,
+                Row(
+                  children: [
+                    const Text(
+                      'Power',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0,
+                      ),
+                    ),
+                    const SizedBox(width: 16.0,),
+                    CupertinoSwitch(
+                      value: isOn,
+                      onChanged: (newOnState) {
+                        setState(() {
+                          isOn = newOnState;
+                        });
+                      },
+                      activeColor: Colors.black,
+                      trackColor: Colors.black26,
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 48.0,
                 ),
-                const Text(
-                  'Routines',
-                  style: TextStyle(
+                Text(
+                  'Running Routines (${deviceRoutineList.length})',
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16.0,
                   ),
