@@ -15,7 +15,7 @@ class DisplayStringsUtil {
     }
   }
 
-  /// Returns the [value] with the right unit and value order
+  /// Returns the [value] with the unit and the value in the right order
   static String getFullUnitAndValue({
     required double value,
     required String unit,
