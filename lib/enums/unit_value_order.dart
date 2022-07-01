@@ -1,0 +1,4 @@
+enum UnitValueOrder {
+  showUnitFirst,
+  showValueFirst,
+}
