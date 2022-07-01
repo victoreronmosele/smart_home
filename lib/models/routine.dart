@@ -9,6 +9,7 @@ class Routine {
   final String unit;
   final NormalLevel normalLevel;
   final int deviceId;
+  final int routineId;
 
   /// Defaults to `true`
   ///
@@ -28,6 +29,7 @@ class Routine {
       required this.unit,
       required this.normalLevel,
       required this.deviceId,
+      required this.routineId,
       this.showDecimal = true,
       this.showUnitFirst = false,
       this.isSystemRoutine = false});
