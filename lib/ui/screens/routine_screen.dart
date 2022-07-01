@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/enums/device.dart';
 import 'package:smart_home/models/routine.dart';
+import 'package:smart_home/ui/screens/edit_routine_screen.dart';
 import 'package:smart_home/utils/display_strings_util.dart';
 
 class RoutineScreen extends StatelessWidget {
@@ -30,12 +31,22 @@ class RoutineScreen extends StatelessWidget {
         ),
         actions: [
           /// Show Edit button if the routine is not a default one
-
           if (!routine.isSystemRoutine)
-            const Center(
+            Center(
                 child: Padding(
-              padding: EdgeInsets.only(right: 16.0),
-              child: Text('Edit', style: TextStyle(color: Colors.black)),
+              padding: const EdgeInsets.only(right: 16.0),
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            EditRoutineScreen(routine: routine),
+                      ),
+                    );
+                  },
+                  child: const Text('Edit',
+                      style: TextStyle(color: Colors.black))),
             )),
         ],
       ),

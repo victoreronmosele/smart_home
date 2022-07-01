@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smart_home/enums/device.dart';
 import 'package:smart_home/models/routine.dart';
 import 'package:smart_home/providers/routines_provider.dart';
+import 'package:smart_home/ui/screens/add_routine_screen.dart';
 import 'package:smart_home/ui/screens/device_screen.dart';
 import 'package:smart_home/ui/screens/routine_screen.dart';
 import 'package:smart_home/ui/widgets/device_card.dart';
@@ -138,7 +139,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddRoutineScreen(),
+            ),
+          );
+        },
         label: const Text('Add Routine'),
         icon: const Icon(Icons.add),
       ),
