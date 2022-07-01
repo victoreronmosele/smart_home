@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smart_home/ui/screens/home_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smart_home/ui/screens/splash_screen.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.black,
           floatingActionButtonTheme: const FloatingActionButtonThemeData(
               backgroundColor: Colors.black)),
-      home: const HomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }
