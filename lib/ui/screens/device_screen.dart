@@ -37,7 +37,7 @@ class _DeviceScreenState extends ConsumerState<DeviceScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          widget.device.name,
+          widget.device.longName,
           style: const TextStyle(color: Colors.black),
         ),
       ),
@@ -57,7 +57,9 @@ class _DeviceScreenState extends ConsumerState<DeviceScreen> {
                         fontSize: 16.0,
                       ),
                     ),
-                    const SizedBox(width: 16.0,),
+                    const SizedBox(
+                      width: 16.0,
+                    ),
                     CupertinoSwitch(
                       value: isOn,
                       onChanged: (newOnState) {
@@ -73,6 +75,12 @@ class _DeviceScreenState extends ConsumerState<DeviceScreen> {
                 const SizedBox(
                   height: 48.0,
                 ),
+                Center(
+                    child: Image.asset(
+                  widget.device.imageUrl,
+                  height: 300,
+                  fit: BoxFit.fitWidth,
+                )),
                 Text(
                   'Running Routines (${deviceRoutineList.length})',
                   style: const TextStyle(
