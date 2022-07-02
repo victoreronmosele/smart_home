@@ -11,16 +11,20 @@ class DeviceViewModel {
   WidgetRef ref;
   Device device;
 
-  List<int> get disabledDevices => ref.watch(disabledDevicesProvider);
+  List<int> get _disabledDevices => ref.watch(disabledDevicesProvider);
 
-  bool get isDeviceOn => !disabledDevices.contains(device.id);
+  bool get isDeviceOn => !_disabledDevices.contains(device.id);
 
   /// Change [device] from `on` to `off` or from `off` to `on`
   void toggleDevicePower() {
     if (isDeviceOn) {
-      disabledDevices.add(device.id);
+      ref.watch(disabledDevicesProvider.notifier).state = [
+        ..._disabledDevices,
+        device.id
+      ];
     } else {
-      disabledDevices.remove(device.id);
+      ref.watch(disabledDevicesProvider.notifier).state = [..._disabledDevices]
+        ..remove(device.id);
     }
   }
 }

@@ -77,8 +77,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          RoutineScreen(routineId: routine.routineId),
+                                      builder: (context) => RoutineScreen(
+                                          routineId: routine.routineId),
                                     ),
                                   ).then((value) => setState(() {}));
                                 }),
