@@ -6,6 +6,7 @@ import 'package:smart_home/models/routine.dart';
 import 'package:smart_home/providers/routines_provider.dart';
 import 'package:smart_home/ui/screens/routine_screen.dart';
 import 'package:smart_home/ui/widgets/routine_widget.dart';
+import 'package:smart_home/view_models/device_view_model.dart';
 
 class DeviceScreen extends ConsumerStatefulWidget {
   final Device device;
@@ -16,7 +17,8 @@ class DeviceScreen extends ConsumerStatefulWidget {
 }
 
 class _DeviceScreenState extends ConsumerState<DeviceScreen> {
-  bool isOn = true;
+  DeviceViewModel get viewModel =>
+      DeviceViewModel(ref: ref, device: widget.device);
 
   @override
   Widget build(BuildContext context) {
@@ -61,10 +63,10 @@ class _DeviceScreenState extends ConsumerState<DeviceScreen> {
                       width: 16.0,
                     ),
                     CupertinoSwitch(
-                      value: isOn,
+                      value: viewModel.isDeviceOn,
                       onChanged: (newOnState) {
                         setState(() {
-                          isOn = newOnState;
+                          viewModel.toggleDevicePower();
                         });
                       },
                       activeColor: Colors.black,

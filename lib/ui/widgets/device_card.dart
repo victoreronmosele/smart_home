@@ -1,20 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smart_home/enums/device.dart';
+import 'package:smart_home/view_models/device_view_model.dart';
 
 /// A widget that displays a [Device].
-class DeviceCard extends StatefulWidget {
+class DeviceCard extends ConsumerStatefulWidget {
   final Device device;
   final void Function() onTap;
   const DeviceCard({Key? key, required this.device, required this.onTap})
       : super(key: key);
 
   @override
-  State<DeviceCard> createState() => _DeviceCardState();
+  ConsumerState<DeviceCard> createState() => _DeviceCardState();
 }
 
-class _DeviceCardState extends State<DeviceCard> {
-  bool isOn = true;
+class _DeviceCardState extends ConsumerState<DeviceCard> {
+  DeviceViewModel get viewModel =>
+      DeviceViewModel(ref: ref, device: widget.device);
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -31,10 +35,10 @@ class _DeviceCardState extends State<DeviceCard> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: CupertinoSwitch(
-                      value: isOn,
+                      value: viewModel.isDeviceOn,
                       onChanged: (newOnState) {
                         setState(() {
-                          isOn = newOnState;
+                          viewModel.toggleDevicePower();
                         });
                       },
                       activeColor: Colors.black,
