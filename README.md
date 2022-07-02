@@ -4,7 +4,10 @@ This repository holds the code for a demo of a Smart Home app.
 
 ### Screen recording:
 
-![](screen_recordings/demo.mov)
+
+
+https://user-images.githubusercontent.com/19398044/177014583-867d4ccb-7472-41a1-a5e3-58e044bad4ab.mov
+
 
 ### Development Environment:
 
