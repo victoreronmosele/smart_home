@@ -2,13 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smart_home/enums/routine_status.dart';
 import 'package:smart_home/models/normal_level.dart';
 import 'package:smart_home/models/routine.dart';
-import 'package:smart_home/providers/disabled_devices_provder.dart';
 
 /// Holds default Routines
 final routinesProvider = StateProvider((ref) {
-  final disabledDevices = ref.watch(disabledDevicesProvider);
-
-  final availableRoutines = [
+  final routines = [
     Routine(
       name: 'Room Temperature',
       status: RoutineStatus.problematic,
@@ -53,9 +50,5 @@ final routinesProvider = StateProvider((ref) {
     ),
   ];
 
-  final availableRoutinesWithPoweredOnDevices = availableRoutines
-      .where((element) => !disabledDevices.contains(element.deviceId))
-      .toList();
-
-  return availableRoutinesWithPoweredOnDevices;
+  return routines;
 });

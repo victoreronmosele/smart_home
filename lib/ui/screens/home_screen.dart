@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smart_home/enums/device.dart';
 import 'package:smart_home/models/routine.dart';
+import 'package:smart_home/providers/active_routines_provider.dart';
 import 'package:smart_home/providers/routines_provider.dart';
 import 'package:smart_home/ui/screens/add_routine_screen.dart';
 import 'package:smart_home/ui/screens/device_screen.dart';
@@ -28,7 +29,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     final double availableScreenWidth = screenWidth - screenPaddingSize;
 
-    final List<Routine> routineList = ref.watch(routinesProvider);
+    final List<Routine> routineList = ref.watch(activeRoutinesProvider);
 
     /// Sort by device ID
     routineList.sort((a, b) => a.deviceId - b.deviceId);

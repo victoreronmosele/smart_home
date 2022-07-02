@@ -73,15 +73,14 @@ class WriteRoutineViewModel {
 
   void updateRoutineListWithRoutine(
       {required Routine routine, required bool isNew}) {
-    final routineList = ref.read(routinesProvider.notifier).state;
+    final routineList = ref.watch(routinesProvider.notifier).state;
 
     if (isNew) {
-      routineList.add(routine);
+      ref.watch(routinesProvider.notifier).state = [...routineList, routine];
     } else {
-      routineList.removeWhere(
-          (routineInList) => routineInList.routineId == routine.routineId);
-      routineList.add(routine);
+      ref.watch(routinesProvider.notifier).state = [...routineList]
+        ..removeWhere((r) => r.routineId == routine.routineId)
+        ..add(routine);
     }
-
   }
 }
