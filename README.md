@@ -6,6 +6,10 @@ This repository holds the code for a demo of a Smart Home app.
 
 ![](screen_recordings/demo.mov)
 
+### Development Environment:
+
+ - Flutter (Channel stable, 3.0.3)
+
 ### Building Project:
 - Clone the repository: 
  
