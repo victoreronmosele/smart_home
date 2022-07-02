@@ -3,9 +3,6 @@
 This repository holds the code for a demo of a Smart Home app.
 
 
-### Screenshots:
+### Screen recording:
 
-Home Screen
-
-<img width="291" src="screenshots/home_screen.png"></img>
-
+![](screen_recordings/demo.mov)
