@@ -54,7 +54,7 @@ class _RoutineScreenState extends ConsumerState<RoutineScreen> {
                         builder: (context) =>
                             EditRoutineScreen(routine: routine),
                       ),
-                    ).then((value) => setState(() {}));
+                    );
                   },
                   child: const Text('Edit',
                       style: TextStyle(color: Colors.black))),

@@ -80,7 +80,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                       builder: (context) => RoutineScreen(
                                           routineId: routine.routineId),
                                     ),
-                                  ).then((value) => setState(() {}));
+                                  );
                                 }),
                             const SizedBox(height: 12.0),
                           ],
@@ -122,7 +122,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   builder: (context) =>
                                       DeviceScreen(device: device),
                                 ),
-                              ).then((value) => setState(() {}));
+                              );
                             },
                           ),
                         ),
@@ -148,9 +148,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             MaterialPageRoute(
               builder: (context) => const AddRoutineScreen(),
             ),
-          ).then((value) {
-            setState(() {});
-          });
+          );
         },
         label: const Text('Add Routine'),
         icon: const Icon(Icons.add),
