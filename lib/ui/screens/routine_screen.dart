@@ -1,16 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smart_home/enums/device.dart';
 import 'package:smart_home/models/routine.dart';
+import 'package:smart_home/providers/routines_provider.dart';
 import 'package:smart_home/ui/screens/edit_routine_screen.dart';
 import 'package:smart_home/utils/display_strings_util.dart';
 
-class RoutineScreen extends StatelessWidget {
-  final Routine routine;
-  const RoutineScreen({Key? key, required this.routine}) : super(key: key);
+class RoutineScreen extends ConsumerStatefulWidget {
+  final int routineId;
+  const RoutineScreen({Key? key, required this.routineId}) : super(key: key);
 
   @override
+  ConsumerState<RoutineScreen> createState() => _RoutineScreenState();
+}
+
+class _RoutineScreenState extends ConsumerState<RoutineScreen> {
+  @override
   Widget build(BuildContext context) {
+    final Routine routine = ref.watch(routinesProvider).firstWhere(
+          (element) => element.routineId == widget.routineId,
+        );
+
     final routineDevice =
         Device.values.firstWhere((device) => device.id == routine.deviceId);
 
@@ -43,7 +54,7 @@ class RoutineScreen extends StatelessWidget {
                         builder: (context) =>
                             EditRoutineScreen(routine: routine),
                       ),
-                    );
+                    ).then((value) => setState(() {}));
                   },
                   child: const Text('Edit',
                       style: TextStyle(color: Colors.black))),

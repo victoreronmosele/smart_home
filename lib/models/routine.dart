@@ -33,4 +33,28 @@ class Routine {
       this.showDecimal = true,
       this.showUnitFirst = false,
       this.isSystemRoutine = false});
+
+  Routine copyWith({
+    String? name,
+    RoutineStatus? status,
+    double? value,
+    String? unit,
+    NormalLevel? normalLevel,
+    int? deviceId,
+    bool? showDecimal,
+    bool? showUnitFirst,
+    bool? isSystemRoutine,
+  }) {
+    return Routine(
+        name: name ?? this.name,
+        status: status ?? this.status,
+        value: value ?? this.value,
+        unit: unit ?? this.unit,
+        normalLevel: normalLevel ?? this.normalLevel,
+        deviceId: deviceId ?? this.deviceId,
+        routineId: routineId,
+        showDecimal: showDecimal ?? this.showDecimal,
+        showUnitFirst: showUnitFirst ?? this.showUnitFirst,
+        isSystemRoutine: isSystemRoutine ?? this.isSystemRoutine);
+  }
 }

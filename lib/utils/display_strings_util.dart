@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Util class that handles the display of strings.
 class DisplayStringsUtil {
   /// Returns the [value] with the right decimal places
   ///

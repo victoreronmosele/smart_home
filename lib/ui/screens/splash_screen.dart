@@ -27,6 +27,7 @@ class SplashScreen extends StatelessWidget {
                 ),
                 child: AnimatedTextKit(
                   repeatForever: false,
+                  pause: const Duration(milliseconds: 500),
                   animatedTexts: [
                     FlickerAnimatedText('THE FUTURE',
                         textAlign: TextAlign.center),

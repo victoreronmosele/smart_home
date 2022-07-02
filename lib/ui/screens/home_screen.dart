@@ -30,6 +30,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     final List<Routine> routineList = ref.watch(routinesProvider);
 
+    /// Sort by device ID
+    routineList.sort((a, b) => a.deviceId - b.deviceId);
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -75,9 +78,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          RoutineScreen(routine: routine),
+                                          RoutineScreen(routineId: routine.routineId),
                                     ),
-                                  );
+                                  ).then((value) => setState(() {}));
                                 }),
                             const SizedBox(height: 12.0),
                           ],
@@ -119,7 +122,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   builder: (context) =>
                                       DeviceScreen(device: device),
                                 ),
-                              );
+                              ).then((value) => setState(() {}));
                             },
                           ),
                         ),
@@ -145,7 +148,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             MaterialPageRoute(
               builder: (context) => const AddRoutineScreen(),
             ),
-          );
+          ).then((value) {
+            setState(() {});
+          });
         },
         label: const Text('Add Routine'),
         icon: const Icon(Icons.add),

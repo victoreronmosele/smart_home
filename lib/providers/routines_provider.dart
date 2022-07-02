@@ -22,7 +22,7 @@ final routinesProvider = StateProvider((_) => [
         unit: '%',
         normalLevel: NormalLevel(minimum: 10, maximum: 20),
         deviceId: 2,
-        isSystemRoutine: false,
+        isSystemRoutine: true,
         routineId: 2,
       ),
       Routine(

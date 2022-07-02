@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smart_home/enums/device.dart';
 import 'package:smart_home/enums/routine_status.dart';
 import 'package:smart_home/enums/unit_value_order.dart';
 import 'package:smart_home/models/routine.dart';
+import 'package:smart_home/view_models/write_routine_view_model.dart';
 
 /// This widget abstracts the UI for:
 /// * creating new routines and,
@@ -12,7 +14,7 @@ import 'package:smart_home/models/routine.dart';
 ///
 /// It is composed by the `AddRoutineScreen` and `EditRoutineScreen` widgets.
 ///
-class WriteRoutine extends StatefulWidget {
+class WriteRoutine extends ConsumerStatefulWidget {
   /// [routine] is nullable because this widget can be used to create a new routine
   /// or to edit an existing one.
   ///
@@ -22,10 +24,12 @@ class WriteRoutine extends StatefulWidget {
   const WriteRoutine({Key? key, this.routine}) : super(key: key);
 
   @override
-  State<WriteRoutine> createState() => _WriteRoutineState();
+  ConsumerState<WriteRoutine> createState() => _WriteRoutineState();
 }
 
-class _WriteRoutineState extends State<WriteRoutine> {
+class _WriteRoutineState extends ConsumerState<WriteRoutine> {
+  WriteRoutineViewModel get viewModel => WriteRoutineViewModel(ref: ref);
+
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _valueController = TextEditingController();
@@ -83,6 +87,8 @@ class _WriteRoutineState extends State<WriteRoutine> {
 
   @override
   Widget build(BuildContext context) {
+    const double screenPaddingSize = 16.0;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -114,7 +120,8 @@ class _WriteRoutineState extends State<WriteRoutine> {
       body: SafeArea(
           child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.fromLTRB(
+              screenPaddingSize, screenPaddingSize, screenPaddingSize, 0.0),
           child: Form(
             key: _formKey,
             child: Column(
@@ -213,9 +220,12 @@ class _WriteRoutineState extends State<WriteRoutine> {
                     }
                     return null;
                   },
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                  inputFormatters: [
+                    // Allow Decimal Number With Precision of 2 Only
+                    FilteringTextInputFormatter.allow(
+                        RegExp(r'^\d*\.?\d{0,2}')),
                   ],
                 ),
                 const SizedBox(
@@ -342,9 +352,12 @@ class _WriteRoutineState extends State<WriteRoutine> {
                     }
                     return null;
                   },
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                  inputFormatters: [
+                    // Allow Decimal Number With Precision of 2 Only
+                    FilteringTextInputFormatter.allow(
+                        RegExp(r'^\d*\.?\d{0,2}')),
                   ],
                 ),
                 const SizedBox(
@@ -371,9 +384,12 @@ class _WriteRoutineState extends State<WriteRoutine> {
                     }
                     return null;
                   },
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                  inputFormatters: [
+                    // Allow Decimal Number With Precision of 2 Only
+                    FilteringTextInputFormatter.allow(
+                        RegExp(r'^\d*\.?\d{0,2}')),
                   ],
                 ),
                 const SizedBox(
@@ -387,7 +403,7 @@ class _WriteRoutineState extends State<WriteRoutine> {
     );
   }
 
-  void validateAndSaveRoutine(BuildContext context) {
+  Future<void> validateAndSaveRoutine(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       _selectedDeviceErrorMessage =
           _selectedDevice == null ? 'Please select a device' : null;
@@ -404,6 +420,52 @@ class _WriteRoutineState extends State<WriteRoutine> {
         setState(() {
           /// Clear any existing error message
         });
+        try {
+          Routine? writtenRoutine;
+
+          if (_isRoutineArgumentNull) {
+            writtenRoutine = viewModel.createNewRoutine(
+              name: _nameController.text,
+              status: _selectedRoutineStatus!,
+              value: double.parse(_valueController.text),
+              unit: _unitController.text,
+              unitValueOrder: _selectedUnitValueOrder!,
+              minimumLevel: double.parse(_minimumLevelController.text),
+              maximumLevel: double.parse(_maximumLevelController.text),
+              deviceId: _selectedDevice!.id,
+            );
+          } else {
+            writtenRoutine = viewModel.updateRoutine(
+              originalRoutine: widget.routine!,
+              name: _nameController.text,
+              status: _selectedRoutineStatus!,
+              value: double.parse(_valueController.text),
+              unit: _unitController.text,
+              unitValueOrder: _selectedUnitValueOrder!,
+              minimumLevel: double.parse(_minimumLevelController.text),
+              maximumLevel: double.parse(_maximumLevelController.text),
+              deviceId: _selectedDevice!.id,
+            );
+          }
+
+          viewModel.updateRoutineListWithRoutine(
+              routine: writtenRoutine, isNew: _isRoutineArgumentNull);
+
+          final snackBar = SnackBar(
+            content: Text('${writtenRoutine.name} Routine created!'),
+          );
+
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        } catch (e) {
+          const snackBar = SnackBar(
+            content: Text('An error occured, please check your input'),
+          );
+
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+
+        await Future.delayed(const Duration(milliseconds: 1000));
+
         Navigator.pop(context);
       } else {
         setState(() {

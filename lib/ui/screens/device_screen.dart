@@ -102,8 +102,8 @@ class _DeviceScreenState extends ConsumerState<DeviceScreen> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        RoutineScreen(routine: routine),
+                                    builder: (context) => RoutineScreen(
+                                        routineId: routine.routineId),
                                   ),
                                 );
                               },
