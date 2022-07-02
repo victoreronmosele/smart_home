@@ -7,8 +7,8 @@ class RoutineIDGenerator {
   @visibleForTesting
   set now(DateTime now) => _now = now;
 
-  String generateRoutineId() {
+  int generateRoutineId() {
     _now ??= DateTime.now();
-    return _now!.millisecondsSinceEpoch.toString();
+    return _now!.millisecondsSinceEpoch;
   }
 }

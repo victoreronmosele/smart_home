@@ -12,10 +12,9 @@ void main() {
 
       routineIDGenerator.now = mockCurrentDate;
 
-      final String expectedRoutineID =
-          '${mockCurrentDate.millisecondsSinceEpoch}';
+      final int expectedRoutineID = mockCurrentDate.millisecondsSinceEpoch;
 
-      final String actualRoutineId = routineIDGenerator.generateRoutineId();
+      final int actualRoutineId = routineIDGenerator.generateRoutineId();
 
       expect(actualRoutineId, expectedRoutineID);
     });
